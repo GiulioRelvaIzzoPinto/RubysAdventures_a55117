@@ -4776,6 +4776,83 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26c6e3001df43c748b571d48f2a2a6ae, type: 3}
+--- !u!1001 &4398297125597886914
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5421998449175442726, guid: f72422550e8464d4897db6df0b0d7964, type: 3}
+      propertyPath: m_RootOrder
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 5421998449175442726, guid: f72422550e8464d4897db6df0b0d7964, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -4.94
+      objectReference: {fileID: 0}
+    - target: {fileID: 5421998449175442726, guid: f72422550e8464d4897db6df0b0d7964, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -5.54
+      objectReference: {fileID: 0}
+    - target: {fileID: 5421998449175442726, guid: f72422550e8464d4897db6df0b0d7964, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5421998449175442726, guid: f72422550e8464d4897db6df0b0d7964, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5421998449175442726, guid: f72422550e8464d4897db6df0b0d7964, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5421998449175442726, guid: f72422550e8464d4897db6df0b0d7964, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5421998449175442726, guid: f72422550e8464d4897db6df0b0d7964, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5421998449175442726, guid: f72422550e8464d4897db6df0b0d7964, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5421998449175442726, guid: f72422550e8464d4897db6df0b0d7964, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5421998449175442726, guid: f72422550e8464d4897db6df0b0d7964, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6867605706536340106, guid: f72422550e8464d4897db6df0b0d7964, type: 3}
+      propertyPath: m_Name
+      value: Jambi_NPC
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f72422550e8464d4897db6df0b0d7964, type: 3}
+--- !u!1 &4398297125597886915 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6867605706536340106, guid: f72422550e8464d4897db6df0b0d7964, type: 3}
+  m_PrefabInstance: {fileID: 4398297125597886914}
+  m_PrefabAsset: {fileID: 0}
+--- !u!111 &4398297125597886916
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4398297125597886915}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1001 &8129654392278578777
 PrefabInstance:
   m_ObjectHideFlags: 0
