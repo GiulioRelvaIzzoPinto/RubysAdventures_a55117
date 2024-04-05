@@ -112,5 +112,10 @@ public class RubyController : MonoBehaviour
 
         animator.SetTrigger("Launch");
     }
+
+    internal void PlaySound(AudioClip collectedClip)
+    {
+        throw new NotImplementedException();
+    }
 }
 
