@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-﻿public class EnemyController : MonoBehaviour
+public class EnemyController : MonoBehaviour
 {
     public float speed;
     public bool vertical;
@@ -12,8 +12,8 @@ using UnityEngine;
     float timer;
     int direction = 1;
     bool broken = true;
-    
     Animator animator;
+    public ParticleSystem SmokeEffect;
     
     // Start is called before the first frame update
     void Start()
@@ -64,6 +64,7 @@ using UnityEngine;
         }
         
         rigidbody2D.MovePosition(position);
+
     }
     
     void OnCollisionEnter2D(Collision2D other)
@@ -83,5 +84,6 @@ using UnityEngine;
         rigidbody2D.simulated = false;
         //optional if you added the fixed animation
         animator.SetTrigger("Fixed");
+        SmokeEffect.Stop();
     }
 }
