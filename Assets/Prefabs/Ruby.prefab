@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1556179824685152857}
   - component: {fileID: 8679449416749524934}
   - component: {fileID: 8395612291041006336}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Ruby
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -103,9 +103,11 @@ MonoBehaviour:
   speed: 6
   maxHealth: 5
   timeInvincible: 2
+  respawnPosition: {fileID: 0}
+  hitParticle: {fileID: 0}
   projectilePrefab: {fileID: 3077248445438775107, guid: 3872a8025574ab14b9c9e9ad14194c3b, type: 3}
-  throwSound: {fileID: 8300000, guid: b2edfd40873655249ba0e01a5cf705be, type: 3}
   hitSound: {fileID: 8300000, guid: 9b1bb1f450b7d444fa4a8019d13519a7, type: 3}
+  shootingSound: {fileID: 8300000, guid: b2edfd40873655249ba0e01a5cf705be, type: 3}
 --- !u!50 &1556179824685152857
 Rigidbody2D:
   serializedVersion: 4

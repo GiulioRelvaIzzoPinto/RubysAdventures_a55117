@@ -1,44 +1,73 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class RubyController : MonoBehaviour
 {
-    public float speed = 3.0f;
+    // ========= MOVEMENT =================
+    public float speed = 4;
     
+    // ======== HEALTH ==========
     public int maxHealth = 5;
     public float timeInvincible = 2.0f;
+    public Transform respawnPosition;
+    public ParticleSystem hitParticle;
+    
+    // ======== PROJECTILE ==========
     public GameObject projectilePrefab;
 
-    public AudioClip throwSound;
+    // ======== AUDIO ==========
     public AudioClip hitSound;
-
-    public int health {  get { return currentHealth; }}
-    int currentHealth;
-    bool isInvincible;
-    float invincibleTimer;
+    public AudioClip shootingSound;
     
+    // ======== HEALTH ==========
+    public int health
+    {
+        get { return currentHealth; }
+    }
+    
+    // =========== MOVEMENT ==============
     Rigidbody2D rigidbody2d;
+    Vector2 currentInput;
     
+    // ======== HEALTH ==========
+    int currentHealth;
+    float invincibleTimer;
+    bool isInvincible;
+   
+    // ==== ANIMATION =====
     Animator animator;
-    Vector2 lookDirection = new Vector2(1,0);
+    Vector2 lookDirection = new Vector2(1, 0);
     
+    // ================= SOUNDS =======================
     AudioSource audioSource;
     
-    // Start is called before the first frame update
     void Start()
     {
+        // =========== MOVEMENT ==============
         rigidbody2d = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
-
+                
+        // ======== HEALTH ==========
+        invincibleTimer = -1.0f;
         currentHealth = maxHealth;
         
+        // ==== ANIMATION =====
+        animator = GetComponent<Animator>();
+        
+        // ==== AUDIO =====
         audioSource = GetComponent<AudioSource>();
-    } 
+    }
 
-    // Update is called once per frame
     void Update()
     {
+        // ================= HEALTH ====================
+        if (isInvincible)
+        {
+            invincibleTimer -= Time.deltaTime;
+            if (invincibleTimer < 0)
+                isInvincible = false;
+        }
+
+        // ============== MOVEMENT ======================
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
                 
@@ -49,73 +78,92 @@ public class RubyController : MonoBehaviour
             lookDirection.Set(move.x, move.y);
             lookDirection.Normalize();
         }
-        
+
+        currentInput = move;
+
+
+        // ============== ANIMATION =======================
+
         animator.SetFloat("Look X", lookDirection.x);
         animator.SetFloat("Look Y", lookDirection.y);
         animator.SetFloat("Speed", move.magnitude);
-        
-        Vector2 position = rigidbody2d.position;
-        
-        position = position + move * speed * Time.deltaTime;
-        
-        rigidbody2d.MovePosition(position);
 
-        if (isInvincible)
-        {
-            invincibleTimer -= Time.deltaTime;
-            if (invincibleTimer < 0)
-                isInvincible = false;
-        }
+        // ============== PROJECTILE ======================
+
+        if (Input.GetKeyDown(KeyCode.C))
+            LaunchProjectile();
         
-        if(Input.GetKeyDown(KeyCode.C))
-        {
-            Launch();
-        }
-        
+        // ======== DIALOGUE ==========
         if (Input.GetKeyDown(KeyCode.X))
         {
-            RaycastHit2D hit = Physics2D.Raycast(rigidbody2d.position + Vector2.up * 0.2f, lookDirection, 1.5f, LayerMask.GetMask("NPC"));
+            RaycastHit2D hit = Physics2D.Raycast(rigidbody2d.position + Vector2.up * 0.2f, lookDirection, 1.5f, 1 << LayerMask.NameToLayer("NPC"));
             if (hit.collider != null)
             {
                 NonPlayerCharacter character = hit.collider.GetComponent<NonPlayerCharacter>();
                 if (character != null)
                 {
                     character.DisplayDialog();
-                }
+                }  
             }
         }
+ 
     }
 
+    void FixedUpdate()
+    {
+        Vector2 position = rigidbody2d.position;
+        
+        position = position + currentInput * speed * Time.deltaTime;
+        
+        rigidbody2d.MovePosition(position);
+    }
+
+    // ===================== HEALTH ==================
     public void ChangeHealth(int amount)
     {
         if (amount < 0)
-        {
+        { 
             if (isInvincible)
                 return;
             
             isInvincible = true;
             invincibleTimer = timeInvincible;
+            
+            animator.SetTrigger("Hit");
+            audioSource.PlayOneShot(hitSound);
 
-            PlaySound(hitSound);
+            Instantiate(hitParticle, transform.position + Vector3.up * 0.5f, Quaternion.identity);
         }
         
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
         
-        UIHealthBar.instance.SetValue(currentHealth / (float)maxHealth);
+        if(currentHealth == 0)
+            Respawn();
+        
+        UIHealthBar.Instance.SetValue(currentHealth / (float)maxHealth);
     }
     
-    void Launch()
+    void Respawn()
+    {
+        ChangeHealth(maxHealth);
+        transform.position = respawnPosition.position;
+    }
+    
+    // =============== PROJECTICLE ========================
+    void LaunchProjectile()
     {
         GameObject projectileObject = Instantiate(projectilePrefab, rigidbody2d.position + Vector2.up * 0.5f, Quaternion.identity);
 
         Projectile projectile = projectileObject.GetComponent<Projectile>();
         projectile.Launch(lookDirection, 300);
-
+        
         animator.SetTrigger("Launch");
-
-        PlaySound(throwSound);
+        audioSource.PlayOneShot(shootingSound);
     }
     
+    // =============== SOUND ==========================
+
+    //Allow to play a sound on the player sound source. used by Collectible
     public void PlaySound(AudioClip clip)
     {
         audioSource.PlayOneShot(clip);
